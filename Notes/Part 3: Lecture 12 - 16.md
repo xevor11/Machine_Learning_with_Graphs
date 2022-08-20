@@ -1,145 +1,145 @@
-Lecture 12 – Network Effects and Cascading Behavior
+## Network Effects and Cascading Behavior
 
 Information can spread through networks: behaviors that cascade from node to node like an epidemic:
 
-Cascading behavior.
-Diffusion of innovations.
-Network effects.
-Epidemics.
+* Cascading behavior.
+* Diffusion of innovations.
+* Network effects.
+* Epidemics.
+
 Examples of spreading through networks: 
 
-Biological: diseases via contagion.
-Technological: cascading failures, spread of information.
-Social: rumors, news, new technology, viral marketing.
+* Biological: diseases via contagion.
+* Technological: cascading failures, spread of information.
+* Social: rumors, news, new technology, viral marketing.
+
 Network cascades are contagions that spread over the edges of the network. It creates a propagation tree, i.e., cascade. “Infection” event in this case can be adoption, infection, activation.
 
 Two ways to model model diffusion:
 
-Decision based models (this lecture ): 
-Models of product adoption, decision making.
-A node observes decisions of its neighbors and makes its own decision.
-Example: you join demonstrations if k of your friends do so.
-Probabilistic models (next lecture): 
-Models of influence or disease spreading.
-An infected node tries to “push” the contagion to an uninfected node.
-Example: you “catch” a disease with some probability from each active neighbor in the network.
- Decision based diffusion models
-Game Theoretic model of cascades:
+* Decision based models (this lecture ): 
+ - Models of product adoption, decision making.
+ - A node observes decisions of its neighbors and makes its own decision.
+ - Example: you join demonstrations if k of your friends do so.
+* Probabilistic models (next lecture): 
+ - Models of influence or disease spreading.
+ - An infected node tries to “push” the contagion to an uninfected node.
+ - Example: you “catch” a disease with some probability from each active neighbor in the network.
+
+### Decision based diffusion models
+
+#### Game Theoretic model of cascades:
 
 Based on 2 player coordination game: 2 players – each chooses technology A or B; each player can only adopt one “behavior”, A or B; intuition is such that node v gains more payoff if v’s friends have adopted the same behavior as v.
 
 Payoff matrix for model with two nodes looks as following:
 
-If both v and w adopt behavior A, they each get payoff a > 0.
-If v and w adopt behavior B, they each get payoff b > 0.
-If v and w adopt the opposite behaviors, they each get 0.
-In some large network: each node v is playing a copy of the game with each of its neighbors. Payoff is the sum of node payoffs over all games.
+* If both v and w adopt behavior A, they each get payoff a > 0.
+* If v and w adopt behavior B, they each get payoff b > 0.
+* If v and w adopt the opposite behaviors, they each get 0.
+* In some large network: each node v is playing a copy of the game with each of its neighbors. Payoff is the sum of node payoffs over all games.
+
 Calculation of node v:
 
-Let v have d neighbors. 
-Assume fraction p of v’s neighbors adopt A.
-Payoffv = a∙p∙d if v chooses A; Payoffv = b∙(1-p)∙d if v chooses B.
-Thus: v chooses A if  p > b / (a+b) = q or  p > q (q is payoff threshold).
+* Let v have d neighbors. 
+* Assume fraction p of v’s neighbors adopt A.
+* Payoffv = a∙p∙d if v chooses A; Payoffv = b∙(1 - p)∙d if v chooses B.
+* Thus: v chooses A if  p > b / (a + b) = q or  p > q (q is payoff threshold).
+
 Example Scenario:
 
 Assume graph where everyone starts with all B.  Let small set S of early adopters of A be hard-wired set S – they keep using A no matter what payoffs tell them to do. Assume payoffs are set in such a way that nodes say: if more than q = 50% of my friends take A, I’ll also take A. This means: a = b – ε (ε>0, small positive constant) and then q = ½.
 
-Application: modeling protest recruitment on social networks
+### Application: modeling protest recruitment on social networks
+
 Case: during anti-austerity protests in Spain in May 2011, Twitter was used to organize and mobilize users to participate in the protest. Researchers identified 70 hashtags that were used by the protesters.
+* 70 hashtags were crawled for 1 month period. Number of tweets: 581,750.
+* Relevant users: any user who tweeted any relevant hashtag and their followers + followees. Number of users: 87,569.
+* Created two undirected follower networks:
+ 1. Full network: with all Twitter follow links.
 
-70 hashtags were crawled for 1 month period. Number of tweets: 581,750.
-Relevant users: any user who tweeted any relevant hashtag and their followers + followees. Number of users: 87,569.
-Created two undirected follower networks:
-1. Full network: with all Twitter follow links.
+ 2. Symmetric network with only the reciprocal follow links (i ➞ j and j ➞ i). This network represents “strong” connections only.
 
-2. Symmetric network with only the reciprocal follow links (i ➞ j and j ➞ i). This network represents “strong” connections only.
+### Definitions:
 
-Definitions:
+* User activation time: moment when user starts tweeting protest messages.
+* $k_{in}$ = the total number of neighbors when a user became active.
+* $k_{a}$ = number of active neighbors when a user became active.
+* Activation threshold = $\frac {k_{a}}{k_{in}}$. The fraction of active neighbors at the time when a user becomes active.
+  - If $\frac {k_{a}}{k_{in}}$ ≈ 0, then the user joins the movement when very few neighbors are active ⇒ no social pressure.
+  - If $\frac {k_{a}}{k_{in}}$ ≈ 1, then the user joins the movement after most of its neighbors are active ⇒ high social pressure.
 
-User activation time: moment when user starts tweeting protest messages.
-kin = the total number of neighbors when a user became active.
-ka = number of active neighbors when a user became active.
-Activation threshold = ka/kin. The fraction of active neighbors at the time when a user becomes active.
-If ka/kin ≈ 0, then the user joins the movement when very few neighbors are active ⇒ no social pressure.
-If ka/kin ≈ 1, then the user joins the movement after most of its neighbors are active ⇒ high social pressure.
-
-Distribution of activation thresholds – mostly uniform distribution in both networks, except for two local peaks.
 Authors define the information cascades as follows: if a user tweets a message at time t and one of its followers tweets a message in (t, t + Δt), then they form a cascade.
 
-
-Cascade formed from 1 ➞ 2 ➞ 3
 To identify who starts successful cascades, authors use method of k-core decomposition: 
 
-k-core: biggest connected subgraph where every node has at least degree k. 
-Method: repeatedly remove all nodes with degree less than k.
-Higher k-core number of a node means it is more central.
+* k-core: biggest connected subgraph where every node has at least degree k. 
+* Method: repeatedly remove all nodes with degree less than k.
+* Higher k-core number of a node means it is more central.
+
 Picture below shows the K-core decomposition of the follow network: red nodes start successful cascades and they have higher k-core values. So, successful cascade starters are central and connected to equally well connected users.
 
-
-K-core decomposition of the follow network
 To summarize the cascades on Twitter: users have uniform activation threshold, with two local peaks, most cascades are short, and successful cascades are started by central (more core) users.
 
 So far, we looked at Decision Based Models that are utility based, deterministic and “node” centric (a node observes decisions of its neighbors and makes its own decision – behaviors A and B compete, nodes can only get utility from neighbors of same behavior: A-A get a, B-B get b, A-B get 0). The next model of cascading behavior is the extending decision based models to multiple contagions.
 
-Extending the Model: Allow people to adopt A and B
+### Extending the Model: Allow people to adopt A and B
+
 Let’s add an extra strategy “AB”:
 
-AB-A : gets a.
-AB-B : gets b.
-AB-AB : gets max(a, b).
-Also: some cost c for the effort of maintaining both strategies (summed over all interactions).
-Note: a given node can receive a from one neighbor and b from another by playing AB, which is why it could be worth the cost c.
-Cascades and compatibility model: every node in an infinite network starts with B. Then, a finite set S initially adopts A. Run the model for t=1,2,3,…: each node selects behavior that will optimize payoff (given what its neighbors did in at time t-1). How will nodes switch from B to A or AB?
+* AB-A : gets a.
+* AB-B : gets b.
+* AB-AB : gets max(a, b).
+* Also: some cost c for the effort of maintaining both strategies (summed over all interactions).
+  * Note: a given node can receive a from one neighbor and b from another by playing AB, which is why it could be worth the cost c.
+  
+  Cascades and compatibility model: every node in an infinite network starts with B. Then, a finite set S initially adopts A. Run the model for t=1,2,3,…: each node   selects behavior that will optimize payoff (given what its neighbors did in at time t-1). How will nodes switch from B to A or AB?
 
-Let’s solve the model in a general case: infinite path starts with all Bs. Payoffs for w: A = a, B = 1, AB = a+1-c. For what pairs (c,a) does A spread? We need to analyze two cases for node w (different neighbors situations) and define what w would do based on the values of a and c?
+  Let’s solve the model in a general case: infinite path starts with all Bs. Payoffs for w: A = a, B = 1, AB = a + 1 - c. For what pairs (c,a) does A spread? We need to   analyze two cases for node w (different neighbors situations) and define what w would do based on the values of a and c?
 
-A-w-B:
+1. A - w - B:
 
-Color letters indicate what is the optimal decision for node w (with payoffs for w: A = a, B = 1, AB = a+1-c).
-AB-w-B:
-
-Color letters indicate what is the optimal decision for node w (now payoff is changed for B: A = a, B = 1+1, AB = a+1-c).
-If we combine two pictures, we get the following:
-
+2. AB - w - B:
 
 To summarise: if B is the default throughout the network until new/better A comes along, what happens:
 
-Infiltration: if B is too compatible then people will take on both and then drop the worse one (B).
-Direct conquest: if A makes itself not compatible – people on the border must choose. They pick the better one (A).
-Buffer zone: if you choose an optimal level then you keep a static “buffer” between A and B.
-Lecture 13 – Probabilistic Contagion and Models of Influence
-Slides, Video
+* Infiltration: if B is too compatible then people will take on both and then drop the worse one (B).
+* Direct conquest: if A makes itself not compatible – people on the border must choose. They pick the better one (A).
+* Buffer zone: if you choose an optimal level then you keep a static “buffer” between A and B.
+
+## Probabilistic Contagion and Models of Influence
 
 So far, we learned deterministic decision-based models where nodes make decisions based on pay-off benefits of adopting one strategy or the other. Now, we will do things by observing data because in cascades spreading like epidemics, there is lack of decision making and the process of contagion is complex and unobservable (in some cases it involves (or can be modeled as) randomness).
 
-Simple model: Branching process
+### Simple model: Branching process
 
-First wave: a person carrying a disease enters the population and transmits to all she meets with probability q. She meets d people, a portion of which will be infected. 
-Second wave: each of the d people goes and meets d different people. So we have a second wave of d ∗ d = d2 people, a portion of which will be infected. 
-Subsequent waves: same process.
-Epidemic model based on random trees
+* First wave: a person carrying a disease enters the population and transmits to all she meets with probability q. She meets d people, a portion of which will be infected. 
+* Second wave: each of the d people goes and meets d different people. So we have a second wave of d ∗ d = d2 people, a portion of which will be infected.
+* Subsequent waves: same process.
 
-A patient meets d new people and with probability q>0 she infects each of them.
-Epidemic runs forever if: lim (h→∞) p(h) > 0 (p(h) is probability that a node at depth h is infected.
-Epidemic dies out if:  lim (h→∞) p(h) = 0.
+### Epidemic model based on random trees
+
+* A patient meets d new people and with probability q>0 she infects each of them.
+* Epidemic runs forever if: lim (h→∞) p(h) > 0 (p(h) is probability that a node at depth h is infected.
+* Epidemic dies out if:  lim (h→∞) p(h) = 0.
+
 So, we need to find  lim (h→∞) p(h) based on q and d. For p(h) to be recurrent (parent-child relation in a tree):
 
- p_h = 1-(1-q\cdot p_{h-1})^d 
-Then lim (h→∞) p(h) equals the result of iterating f(x) = 1 – (1 – q ⋅ x)d where x1 = f(1) = 1 (since p1 = 1), x2 = f(x1),  x3 = f(x2), …
+ $p_{h}$ $=$ $1$ $-$ $(1 - q\cdot p_{h-1})^d$ 
+
+Then lim (h→∞) p(h) equals the result of iterating $f(x) = 1 – (1 – q ⋅ x)^d$ where $x1 = f(1) = 1$ $(since p1 = 1)$, $x_{2}$ $=$ $f(x_{1})$,  $x_{3}$ = $f(x_{2})$, …
 
 If we want the epidemic to die out, then iterating f(x) must go to zero. So, f(x) must be below y = x.
 
-
-The shape of f(x) is monotone.
 Also, f′(x)  is non-decreasing, and  f′(0) = d ⋅ q, which means that for d ⋅ q > 1, the curve is above the line, and we have a single fixed point of x = 1 (single because f′ is not just monotone, but also non-increasing). Otherwise (if d ⋅ q > 1), we have a single fixed point x = 0. So a simple result: depending on how d ⋅ q compares to 1, epidemic spreads or dies out.
 
-Now we come to the most important number for epidemic R0 = d ⋅ q (d ⋅ q is expected # of people that get infected). There is an epidemic if R0 ≥  1.
+Now we come to the most important number for epidemic R0 = d ⋅ q (d ⋅ q is expected # of people that get infected). There is an epidemic if $R_{0} ≥  1$.
 
-Only R0 matters:
+Only $R_{0}$ matters:
 
-R0 ≥ 1: epidemic never dies and the number of infected people increases exponentially.
-R0  < 1: Epidemic dies out exponentially quickly.
-Measures to limit the spreading: When R0 is close 1, slightly changing q or d can result in epidemics dying out or happening:
+* $R_{0 ≥ 1}$: epidemic never dies and the number of infected people increases exponentially.
+* $R_{0} < 1$ Epidemic dies out exponentially quickly.
+* Measures to limit the spreading: When R0 is close 1, slightly changing q or d can result in epidemics dying out or happening:
 
 Quarantining people/nodes [reducing d].
 Encouraging better sanitary practices reduces germs spreading [reducing q].
